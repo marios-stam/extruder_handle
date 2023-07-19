@@ -202,7 +202,7 @@ void loop() {
 
     distance_mm = 10*(Distancedigits[0]-48) + Distancedigits[1]-48;
 
-    speed_mm_s = 10*(Speeddigits[0]-48) + 1*(Speeddigits[1]-48) + 0.1*(Speeddigits[2]-48);
+    speed_mm_s = constrain(10*(Speeddigits[0]-48) + 1*(Speeddigits[1]-48) + 0.1*(Speeddigits[2]-48), MinimumSpeed, MaximumSpeed);
 
     
     if(speed_mm_s > 0 && distance_mm > 0){
