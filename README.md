@@ -1,7 +1,7 @@
 # Extruder_Code
 Drone extrusion
 
-Currently some new bug in the code, there is something wrong with the serial communication part. 
+~~Currently some new bug in the code, there is something wrong with the serial communication part.~~ Disregard the text in the email about a bug, it's fixed now. 
 
 
 Documentation: 
