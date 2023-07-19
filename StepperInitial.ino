@@ -44,6 +44,8 @@ void home(float speed_mm_s){
 
 void extrude(float distance_mm, float speed_mm_s, int direction){
 
+  
+
   digitalWrite(PWMA, HIGH);
   digitalWrite(PWMB, HIGH);
 
@@ -65,7 +67,7 @@ void extrude(float distance_mm, float speed_mm_s, int direction){
 
     StepCnt = StepCnt + 1;
 
-    if(LimitPlusValue == LOW && StepCnt > 2){
+    if(LimitPlusValue == LOW ){
 
       delay(500);
 
@@ -77,7 +79,7 @@ void extrude(float distance_mm, float speed_mm_s, int direction){
 
     }
 
-    if(LimitMinusValue == LOW) {
+    if(LimitMinusValue == LOW && direction == -1) {
       
       distance_mm = 0;
         
@@ -128,7 +130,7 @@ void loop() {
         delay(500);
 
         if (digit >= '0' && digit <= '9'){
-          delay(100);
+          //delay(100);
           Serial.print(digit);
           Distancedigits[arrayTick] = digit;
           arrayTick = arrayTick + 1;
@@ -170,15 +172,19 @@ void loop() {
     }
   }
 
+
+
     delay(1000);
+
+
 
     Serial.println('\n');
     Serial.print("Command registered");
     Serial.println('\n');
 
-    distance_mm = 10*(Distancedigits[0]-'0') + Distancedigits[1]-'0';
+    distance_mm = 10*(Distancedigits[0]-48) + Distancedigits[1]-48;
 
-    speed_mm_s = 10*(Speeddigits[0]-'0') + 1*(Speeddigits[1]-'0') + 0.1*(Speeddigits[2]-'0');
+    speed_mm_s = 10*(Speeddigits[0]-48) + 1*(Speeddigits[1]-48) + 0.1*(Speeddigits[2]-48);
 
     Serial.print("Speed and distance calculated");
     Serial.println('\n');
@@ -203,12 +209,8 @@ void loop() {
       Serial.println('\n');
 
       extrude(distance_mm, speed_mm_s, direction);
-            for(int i = 0; i < 3; i++){
-        Speeddigits[i] = 0;
-      }
-      for(int i = 0; i < 2; i++){
-        Distancedigits[i] = 0;
-      }
+      
+
     }
   }
 }
