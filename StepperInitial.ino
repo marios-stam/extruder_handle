@@ -11,8 +11,8 @@ const int LimitPlus = 4;
 const int LimitMinus = 2; 
 int ExtrudeAllow = 0; 
 int incomingByte = 0;
-char Distancedigits[3];
-char Speeddigits[2];
+char Distancedigits[2];
+char Speeddigits[3];
 int arrayTick = 0;
 int direction = 0;
 float distance_mm = 0;
@@ -91,6 +91,13 @@ void extrude(float distance_mm, float speed_mm_s, int direction){
         digitalWrite(PWMB, LOW);
         distance_mm = 0;
         speed_mm_s = 0;
+
+        for(int i = 0; i < 2; i++){
+          Distancedigits[i] = 0;
+        }
+        for(int i = 0; i < 3; i++){
+          Speeddigits[i] = 0;
+        }
 }
 
 
@@ -117,6 +124,13 @@ void loop() {
 
   if (Serial.available() > 0) {
 
+      for(int i = 0; i < 2; i++){
+        Distancedigits[i] = 0;
+      }
+      for(int i = 0; i < 3; i++){
+        Speeddigits[i] = 0;
+      }
+
     char incomingByte = Serial.read();
 
     if(incomingByte == 69){ //ASCII 69 = "E" for Extrude
@@ -130,7 +144,7 @@ void loop() {
         delay(500);
 
         if (digit >= '0' && digit <= '9'){
-          //delay(100);
+          delay(100);
           Serial.print(digit);
           Distancedigits[arrayTick] = digit;
           arrayTick = arrayTick + 1;
@@ -182,19 +196,15 @@ void loop() {
     Serial.print("Command registered");
     Serial.println('\n');
 
+    for(int i = 0; i < 2; i++){
+      Serial.print(Distancedigits[i]);
+    }
+
     distance_mm = 10*(Distancedigits[0]-48) + Distancedigits[1]-48;
 
     speed_mm_s = 10*(Speeddigits[0]-48) + 1*(Speeddigits[1]-48) + 0.1*(Speeddigits[2]-48);
 
-    Serial.print("Speed and distance calculated");
-    Serial.println('\n');
-    Serial.print("Distance = ");
-    Serial.print(distance_mm);
-    Serial.println('\n');
-    Serial.print("Speed = ");
-    Serial.print(speed_mm_s);
-    Serial.println('\n');
-
+    
     if(speed_mm_s > 0 && distance_mm > 0){
 
       Serial.println('\n');
@@ -209,7 +219,7 @@ void loop() {
       Serial.println('\n');
 
       extrude(distance_mm, speed_mm_s, direction);
-      
+
 
     }
   }
