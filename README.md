@@ -11,7 +11,7 @@ The extrude function can either be called directly in the Arduino code as extrud
 Example: Extrude 25 mm, at 32.6 mm/s forwards: E25S326D+ over serial. 
 
 
-The extrusion speed is limited to a minimum of 5mm/s (but that could probably be lowered, it gets progressively more and more noisy the slower it is however) and a maximum of 35mm/s, beyond which the motor stalls when supplied with about 1.8 amps at 12V. These values can be changed via “MaximumSpeed” and “MinimumSpeed” at the top of the code. 
+The extrusion speed should be limited to a minimum of 5mm/s (but that could probably be lowered, it gets progressively more and more noisy the slower it is however) and a maximum of 35mm/s, beyond which the motor stalls when supplied with about 1.8 amps at 12V with syringes. These values can be changed via “MaximumSpeed” and “MinimumSpeed” at the top of the code. 
 
 Constants: 
 
